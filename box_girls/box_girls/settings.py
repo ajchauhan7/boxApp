@@ -1,7 +1,9 @@
 import os
+from django.core.urlresolvers import reverse_lazy
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 SECRET_KEY = '#'
 
@@ -34,7 +36,8 @@ INSTALLED_APPS = [
     'notification',
     'report_system',
     'schedule_and_calendar',
-    'questions'
+    'questions',
+    'login'
 ]
 
 MIDDLEWARE = [
@@ -52,7 +55,7 @@ ROOT_URLCONF = 'box_girls.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates/'],
+        'DIRS': ['templates/', os.path.join(BASE_DIR, 'login/templates/')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -105,9 +108,11 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
+    os.path.join(BASE_DIR, "templates/box_girls_ui/"),
 ]
 
 # REST_FRAMEWORK = {
@@ -130,3 +135,6 @@ STATICFILES_DIRS = [
 # }
 
 ROLEPERMISSIONS_MODULE = 'box_girls.roles'
+
+LOGIN_URL = reverse_lazy('login')
+LOGIN_REDIRECT_URL = reverse_lazy('home')

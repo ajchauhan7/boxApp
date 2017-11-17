@@ -5,6 +5,8 @@ from rest_framework_swagger.views import get_swagger_view
 from rest_framework.routers import DefaultRouter
 from rest_framework.authtoken import views as token_views
 from .views import redocs
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = DefaultRouter()
 
@@ -26,4 +28,8 @@ urlpatterns = [
     url(r'^api/', include('report_system.urls')),
     url(r'^api/', include('schedule_and_calendar.urls')),
     url(r'^api/', include('user_system.urls')),
-]
+
+    #auth urls
+    url(r'^', include('login.urls')),
+
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
